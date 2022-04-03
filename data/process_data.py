@@ -52,8 +52,8 @@ def clean_data(df):
     return df_concat_drop
 
 def save_data(df, database_filename):
-    engine = create_engine('sqlite:///disaster_response.db')
-    df.to_sql(database_filename, engine, index=False)
+    engine = create_engine('sqlite:///'+database_filename)
+    df.to_sql('clean_data', engine, index=False)
 
 
 def main():
