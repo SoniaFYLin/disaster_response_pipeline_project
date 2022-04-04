@@ -14,7 +14,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.datasets import make_multilabel_classification
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier, AdaBoostClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score,f1_score,precision_score,recall_score
@@ -23,8 +23,10 @@ import pickle
 def load_data(database_filepath):
     '''
     summary: read in table from given database filepath and return X, y and category_names for labels
-    param database_filepath:
-    return: X, y, category_names
+    param: database_filepath(string): path of the database
+    return: X(dataframe): a dataframe of features
+            y(dataframe): a dataframe of labels
+            category_names(list): a list to show all categories in label
     '''
     print (database_filepath)
     engine = create_engine('sqlite:///'+ database_filepath)
@@ -39,8 +41,8 @@ def load_data(database_filepath):
 def tokenize(text):
     '''
     Summary: read in a text message and return clean tockens
-    param: text: message for tokens
-    return: tokens: clean tokens of the input message
+    param: text(string): message for tokens
+    return: tokens(list): clean tokens of the input message
     '''
     # Normalize text
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
@@ -67,25 +69,28 @@ def build_model():
     ])
 
     # Use grid search to find better parameters
-    #parameters = {'clf__estimator__n_estimators': [50, 60, 70, 80]}
-    #cv = GridSearchCV(pipeline, param_grid=parameters)
-    model = pipeline
+    parameters = {'clf__estimator__n_estimators': [25, 50],
+                  'clf__estimator__max_depth': [10, 20, 30]
+                  }
+
+    cv = GridSearchCV(pipeline, param_grid=parameters)
+    model = cv
 
     return model
 
 def evaluate_model(model, X_test, Y_test, category_names):
     '''
     Summary: Evaluate model accuracy and report using test data
-    param model: model build from pipeline
-    param X_test: X features from test data
-    param Y_test: labels from test data
-    param category_names: categories from labels
-    return: result: pa.dataframe['accuracy', 'precision', 'recall', 'f1-score']
+    param model(object): model build from pipeline
+    param X_test(dataframe): X features from test data
+    param Y_test(dataframe): labels from test data
+    param category_names(list): categories from labels
+    return: result(dataframe): list ['accuracy', 'precision', 'recall', 'f1-score'] for all categories and theor means
     '''
     # predict labels for X_test
     Y_pred = model.predict(X_test)
 
-    # summary results
+    # Summary accuracy, precision, recall, f1-score in result dataframe
     accuracy_list = []
     precision_list = []
     recall_list = []
@@ -100,7 +105,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
         f1_score_list.append(f1_score)
         accuracy = accuracy_score(Y_test.iloc[:, i].values, Y_pred[:, i])
         accuracy_list.append(accuracy)
-        #print('Accuracy of %25s: %.2f' % (category_names[i], accuracy))
+
     data = {'Accuracy': accuracy_list,
             'Precision': precision_list,
             'Recall': recall_list,
@@ -108,12 +113,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
             }
     results = pd.DataFrame(data, index=category_names)
     print (results)
+    print (results.mean(axis=0))
 
 def save_model(model, model_filepath):
     '''
     Summary: export model as a pickle file
-    :param model: model to save
-    :param model_filepath: path of the output pickle file
+    param model(object): trained model to save
+          model_filepath(string): path of the output pickle file
     '''
     pickle.dump(model, open(model_filepath, "wb"))
 
