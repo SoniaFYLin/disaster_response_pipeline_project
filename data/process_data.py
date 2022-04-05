@@ -4,8 +4,14 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
-
-
+    '''
+    summary: read in csv files of filepath and return a dataframe combining Message and Category.
+    param: messages_filepath(string): path of message file
+           categories_filepath(string): path of the category file
+    return: X(dataframe): features dataframe of combined table
+            y(dataframe): labels dataframe of combined table
+            category_names(list): a list to show all categories in labels
+    '''
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
     # load categories dataset

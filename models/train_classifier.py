@@ -25,7 +25,7 @@ def load_data(database_filepath):
     summary: read in table from given database filepath and return X, y and category_names for labels
     param: database_filepath(string): path of the database
     return: X(dataframe): a dataframe of features
-            y(dataframe): a dataframe of labels
+            y(dataframe): a dataframe of multiplecategorical labels
             category_names(list): a list to show all categories in label
     '''
     print (database_filepath)
@@ -41,7 +41,7 @@ def load_data(database_filepath):
 def tokenize(text):
     '''
     Summary: read in a text message and return clean tockens
-    param: text(string): message for tokens
+    param: text(string): message to being tokenized
     return: tokens(list): clean tokens of the input message
     '''
     # Normalize text
@@ -85,7 +85,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     param X_test(dataframe): X features from test data
     param Y_test(dataframe): labels from test data
     param category_names(list): categories from labels
-    return: result(dataframe): list ['accuracy', 'precision', 'recall', 'f1-score'] for all categories and theor means
+    return: result(dataframe): list ['accuracy', 'precision', 'recall', 'f1-score'] for all categories and their means
     '''
     # predict labels for X_test
     Y_pred = model.predict(X_test)
