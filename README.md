@@ -1,6 +1,28 @@
 # Disaster Response Pipeline Project
+### Table of Contents
 
-### Instructions:
+1. [Summary](#summary)
+2. [Files](#files)
+3. [Instructions](#instructions)
+4. [Screenshots](#screenshots)
+5. [Licensing, Authors, and Acknowledgements](#licensing)
+
+## Summary <a name="summary"></a>
+This project uses the disaster_categories.csv and disaster_message.csv files to build a machine learning model in order to classify the disasters 
+
+## Files:<a name="files"></a>
+- Data
+  - disaster_categories.csv
+  - disaster_message.csv
+  - process_data.py: use ETL pipeline to read in above two .csv files, clean and stores in a SQLite database named DisasterResponse.db
+
+- Models
+  - train_classifier.py: load the data from database and do natural language processing and machine learning pipelines to build a machine laerning model stored in classifier.pkl   
+
+- Apps
+  - run.py: a Flask app to allow user use generated ML model to predict the disaster using input messages and prediction display visualization plots
+
+## Instructions: <a name="instructions"></a>
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
@@ -12,3 +34,16 @@
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+## Screenshots: <a name="screenshots"></a>
+- Prediction Page
+![Alt text](https://github.com/SoniaFYLin/disaster_response_pipeline_project/blob/master/prediction.jpg)
+
+- Data Visualization 
+![Alt text](https://github.com/SoniaFYLin/disaster_response_pipeline_project/blob/master/Fig1%262.jpg)
+![Alt text](https://github.com/SoniaFYLin/disaster_response_pipeline_project/blob/master/Fig3%264.jpg)
+
+
+## Licensing, Authors, Acknowledgements<a name="licensing"></a>
+
+- Thanks for Udacity for providing data and template in Data Science Nanodegree program  
