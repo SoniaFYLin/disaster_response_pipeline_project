@@ -1,14 +1,18 @@
 # Disaster Response Pipeline Project
 ### Table of Contents
 
-1. [Summary](#summary)
-2. [Files](#files)
-3. [Instructions](#instructions)
-4. [Screenshots](#screenshots)
-5. [Licensing, Authors, and Acknowledgements](#licensing)
+1. [Project Overview](#overview)
+2. [Installation](#installation)
+3. [Files](#files)
+4. [Instructions](#instructions)
+5. [Screenshots](#screenshots)
+6. [Licensing, Authors, and Acknowledgements](#licensing)
 
-## Summary <a name="summary"></a>
-This project uses the disaster_categories.csv and disaster_message.csv files to build a machine learning model in order to classify the disasters 
+## Project Overview <a name="overview"></a>
+This project created an app that can classify the messages sent from different disasters. By efficiently classifying the disaster into correct categories and sending the requests to the apropriate disaster relief agencies, people can received the help they need in the timely manner. A multi-label classification model was built based on natural language process(NLP) techniques and ETL, Machine Learning pipelines to categorized evert message received.   
+
+## Installation <a name="installation"></a>
+This repository is running with Python3 with libraries of numpy, pandas, re, nltk, sklearn, sqlalchemy, plotly, and flask.  
 
 ## Files:<a name="files"></a>
 - Data
