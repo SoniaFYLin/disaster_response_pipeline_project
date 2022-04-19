@@ -8,9 +8,7 @@ def load_data(messages_filepath, categories_filepath):
     summary: read in csv files of filepath and return a dataframe combining Message and Category.
     param: messages_filepath(string): path of message file
            categories_filepath(string): path of the category file
-    return: X(dataframe): features dataframe of combined table
-            y(dataframe): labels dataframe of combined table
-            category_names(list): a list to show all categories in labels
+    return: df(dataframe): a dataframe combined messsage and category tables
     '''
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
@@ -23,7 +21,11 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
-
+    '''
+    summary: clean data and return a dataframe with columns that indicate individual categories
+    param: df(dataframe): dataframe combined messsage and category tables
+    return: df_concate_drop(dataframe): a dataframe after data cleaning
+        '''
     ## create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';',expand=True)
 
