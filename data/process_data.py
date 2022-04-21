@@ -43,6 +43,10 @@ def clean_data(df):
         # convert column from string to numeric
         df_categories[column] = df_categories[column].apply(lambda x: int(x[-1]))
 
+    # replace the relate==2 to related==1 in order to become binary for related column
+    # replace related==2 to related ==1 on df_categories
+    df_categories.loc[(df_categories.related == 2), 'related'] = 1
+
     ## Replace categories column in df with new category columns
     # drop the original categories column from `df`
     df.drop('categories', inplace=True, axis=1)
@@ -56,6 +60,7 @@ def clean_data(df):
 
     # drop duplicates
     df_concat_drop = df_concat.drop_duplicates()
+
 
     return df_concat_drop
 
